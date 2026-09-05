@@ -617,6 +617,58 @@ body.updates-open .update-log{
   display:block !important;
 }
 
+.request-open .site-window{
+  display:none !important;
+}
+
+.request-open .request-page{
+  display:block !important;
+}
+
+.request-page{
+  display:none;
+  min-height:calc(100vh - 78px);
+  width:100%;
+  padding:70px clamp(24px,5vw,70px);
+  background:#000;
+}
+
+.request-page.show{
+  display:block;
+}
+
+.request-page h1{
+  margin:0 0 10px;
+  font-size:32px;
+}
+
+.request-page-intro{
+  color:#aaa;
+  margin:0 0 28px;
+  max-width:700px;
+  line-height:1.6;
+}
+
+.request-form-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 20px;
+  border:0;
+  border-radius:4px;
+  background:#e50914;
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .2s ease, transform .2s ease;
+}
+
+.request-form-btn:hover{
+  background:#f40612;
+  transform:translateY(-1px);
+}
+
 .update-log h1{
   margin:0 0 8px;
   font-size:32px;
@@ -1173,6 +1225,12 @@ footer{
       Updates
     </button>
 
+    <button
+      onclick="showRequestPage()"
+    >
+      Request
+    </button>
+
   </nav>
 
   <div class="nav-right">
@@ -1511,6 +1569,39 @@ footer{
 
 </section>
 
+<!-- =====================================================
+     REQUEST A MOVIE OR TV SHOW PAGE
+===================================================== -->
+
+<section
+  class="request-page"
+  id="requestPage"
+>
+
+  <button
+    class="back"
+    onclick="goHome()"
+  >
+    ← Back to Home
+  </button>
+
+  <h1>Request a Movie or TV Show</h1>
+
+  <p class="request-page-intro">
+    Want to see a movie or TV show added to Notflix? Send in a request using the form below.
+  </p>
+
+  <a
+    class="request-form-btn"
+    href="https://forms.gle/UZxgHQc2E44zkzgg7"
+    target="_blank"
+    rel="noopener"
+  >
+    Request a Movie or TV Show
+  </a>
+
+</section>
+
 <script>
 
 /* =========================================================
@@ -1572,8 +1663,8 @@ const homeRows = {
     movies: ["bad", "sp3", "sonic2", "fnaf2", "into", "across", "black", "lego"]
   },
   top: {
-    title: "Developer's favorite movies. maybe you will like it too.",
-    movies: ["sp3", "sonic2"]
+    title: "Top Picks for You",
+    movies: ["bad", "black", "fnaf2", "into", "across", "lego"]
   },
   new: {
     title: "More Movies",
@@ -2043,7 +2134,7 @@ renderUpdateLog();
 ========================================================= */
 
 function hideAllViews(){
-  document.body.classList.remove("updates-open");
+  document.body.classList.remove("updates-open", "request-open");
   const windowEl = document.querySelector(".site-window");
   const hero = document.getElementById("hero");
   const main = document.getElementById("mainContent");
@@ -2317,6 +2408,31 @@ function showUpdateLog(){
   });
   const updateButton = document.querySelector('.navlinks button[onclick="showUpdateLog()"]');
   if(updateButton) updateButton.classList.add("active");
+
+  scrollTo(0,0);
+}
+
+
+/* =========================================================
+   REQUEST PAGE
+========================================================= */
+
+function showRequestPage(){
+  const requestPage = document.getElementById("requestPage");
+
+  hideAllViews();
+  document.body.classList.add("request-open");
+
+  if(requestPage){
+    requestPage.style.display = "block";
+    requestPage.classList.add("show");
+  }
+
+  document.querySelectorAll(".navlinks button").forEach(button => {
+    button.classList.remove("active");
+  });
+  const requestButton = document.querySelector('.navlinks button[onclick="showRequestPage()"]');
+  if(requestButton) requestButton.classList.add("active");
 
   scrollTo(0,0);
 }
