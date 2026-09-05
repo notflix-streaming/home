@@ -1122,7 +1122,7 @@ footer{
 ===================================================== -->
 <div class="loading-screen" id="loadingScreen" aria-label="Loading Notflix">
   <img src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyOG5tY3p6eGJ6bDVreDFyNTRueGV4ZzQ3bHNocTRkNnA2enFrc202NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/FgH5xSNjGHZsiYPWAX/200.gif" alt="Loading">
-  <div class="loading-text">Loading...</div>
+  <div class="loading-text"></div>
 </div>
 
 <div class="site-window">
@@ -1607,7 +1607,7 @@ const movies = [
 
     title:"The Bad Guys 2",
     duration:"1h 44m",
-    tagline:"Annie Award for Best Storyboarding Feature",
+    tagline:"Great movie to watch when you want something fun!",
 
     year:"2025",
 
@@ -1633,7 +1633,7 @@ const movies = [
 
     title:"Spider-man 3",
     duration:"2h 19m",
-    tagline:"Developers Favorite",
+    tagline:"A classic superhero adventure.",
 
     year:"2007",
 
@@ -2589,6 +2589,7 @@ function showLoadingScreen(){
 
 // Initial page load: show the loader briefly, then reveal Notflix.
 document.addEventListener("DOMContentLoaded", () => {
+  showLoadingScreen();
   setTimeout(hideLoadingScreen, 500);
 });
 
