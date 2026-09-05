@@ -1397,6 +1397,26 @@ footer{
 
   </section>
 
+  <!-- ALL MOVIES & SHOWS -->
+
+  <section
+    class="row poster"
+    id="allTitles"
+  >
+
+    <div class="row-title">
+
+      <h2 id="allTitlesTitle">Every Movie & Show</h2>
+
+    </div>
+
+    <div
+      class="carousel"
+      id="allTitlesGrid"
+    ></div>
+
+  </section>
+
 
   <!-- FOOTER -->
 
@@ -1630,7 +1650,7 @@ footer{
 
    1. CHANGE THE MOVIE AT THE TOP
       Change the value below to any movie id:
-      "bad", "sp3", "sonic2", "fnaf2", "into", "across", "black", "lego"
+      buddy, noWayHome, flash, sonicova, bad, sp3, sonic2, fnaf2, into, across, black, lego
 
       Example:
       const featuredMovieId = "black";
@@ -1659,16 +1679,20 @@ const homeRows = {
     movies: ["into", "across", "sonic2"]
   },
   popular: {
-    title: "Developer's Favorites",
-    movies: ["sp3", "sonic2"]
+    title: "Best Movies on Notflix",
+    movies: ["buddy", "noWayHome", "flash", "sonicova", "bad", "sp3", "sonic2", "fnaf2", "into", "across", "black", "lego"]
   },
   top: {
     title: "Top Picks for You",
-    movies: ["bad", "black", "fnaf2", "into", "across", "lego"]
+    movies: ["buddy", "noWayHome", "flash", "sonicova", "bad", "black", "fnaf2", "into", "across", "lego"]
   },
   new: {
-    title: "Movies",
-    movies: ["bad", "sp3", "sonic2", "fnaf2", "into", "across", "black", "lego"]
+    title: "More Movies",
+    movies: ["buddy", "noWayHome", "flash", "sonicova", "lego", "black", "across", "into", "fnaf2", "sonic2", "sp3", "bad"]
+  },
+  allTitles: {
+    title: "Every Movie & Show",
+    movies: []
   }
 };
 
@@ -1692,6 +1716,109 @@ const updateLog = [
 
 
 const movies = [
+
+  {
+    id:"buddy",
+
+    title:"Buddy",
+    duration:"1h 35m",
+    tagline:"The newest movie on Notflix!",
+
+    year:"2026",
+
+    genre:"Horror • Comedy",
+
+    rating:"R",
+
+    poster:
+      "https://www.impawards.com/2026/posters/buddy.jpg",
+
+    desc:
+      "A new 2026 horror movie about Buddy, a bright orange unicorn from a children's TV show.",
+
+    cast:
+      "Cristin Milioti • Delaney Quinn • Topher Grace • Keegan-Michael Key",
+
+    drive:"https://drive.google.com/file/d/1nBgLFtXXp1Gpzxj3tIXv_rPtQpt9lkxp/view?usp=sharing"
+  },
+
+
+  {
+    id:"noWayHome",
+
+    title:"Spider-Man: No Way Home",
+    duration:"2h 28m",
+    tagline:"One of the biggest Spider-Man adventures!",
+
+    year:"2021",
+
+    genre:"Action • Adventure • Superhero",
+
+    rating:"PG-13",
+
+    poster:
+      "https://www.impawards.com/2021/posters/spider_man_no_way_home.jpg",
+
+    desc:
+      "Peter Parker turns to Doctor Strange after his identity is revealed, but a spell brings dangerous visitors from other worlds into his life.",
+
+    cast:
+      "Tom Holland • Zendaya • Benedict Cumberbatch • Jacob Batalon",
+
+    drive:"https://drive.google.com/file/d/1cFsvd8HDLZ1rXhKh_OPM0YUM0LI99eLC/view?usp=sharing"
+  },
+
+
+  {
+    id:"flash",
+
+    title:"The Flash",
+    duration:"2h 24m",
+    tagline:"Worlds collide!",
+
+    year:"2023",
+
+    genre:"Action • Adventure • Fantasy",
+
+    rating:"PG-13",
+
+    poster:
+      "https://www.impawards.com/2023/posters/flash.jpg",
+
+    desc:
+      "Barry Allen uses his super speed to change the past, creating a different reality where he must race to save the future.",
+
+    cast:
+      "Ezra Miller • Michael Keaton • Sasha Calle • Michael Shannon",
+
+    drive:"https://drive.google.com/file/d/1ApUHMkZM-j3vM-rSG-kvjk3KuvJNAsXp/view"
+  },
+
+
+  {
+    id:"sonicova",
+
+    title:"Sonic the Hedgehog: The Movie",
+    duration:"54m",
+    tagline:"A classic Sonic adventure!",
+
+    year:"1996",
+
+    genre:"Animation • Adventure • Comedy",
+
+    rating:"TV-PG",
+
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BMTQ4MTI0NjY1Nl5BMl5BanBnXkFtZTcwMjM4NzU0MQ@@._V1_FMjpg_UX1000_.jpg",
+
+    desc:
+      "Sonic, Tails, and Knuckles face Dr. Robotnik in the two-part Sonic OVA adventure.",
+
+    cast:
+      "Yasunori Matsumoto • Hekiru Shiina • Chafûrin",
+
+    drive:"https://drive.google.com/file/d/1_vnuQWGnvMa4uvt9c2MVYYznq_FjgHav/view"
+  },
 
   {
     id:"bad",
@@ -1736,7 +1863,7 @@ const movies = [
       "https://m.media-amazon.com/images/I/A10tF8xUYGL._AC_UF894,1000_QL80_.jpg",
 
     desc:
-      "Spiderman goes on an adventure to stop venom",
+      "Spiderman goes on an adventure to stop venom (note from notflix: the video may be still processing for playback. if it is, try again later.)",
 
     cast:
       "Tobey Maguire",
@@ -1825,33 +1952,33 @@ const movies = [
     cast:
       "Shameik Moore • Hailee Steinfeld • Jake Johnson • Mahershala Ali",
 
-    drive:""
+    drive:"https://drive.google.com/file/d/1V3Bq0lrDQUxJay5DDs3gK69ZvRNb1j2u/view"
   },
 
 
   {
     id:"across",
 
-    title:"Spider-Man: Far From Home",
-    duration:"2h 10m",
-    tagline:"a peak movie bro",
+    title:"Spider-Man: Across the Spider-Verse",
+    duration:"2h 20m",
+    tagline:"An awesome multiverse adventure!",
 
-    year:"2019",
+    year:"2023",
 
     genre:"Animation • Action • Superhero",
 
-    rating:"PG-13",
+    rating:"PG",
 
     poster:
-      "https://i.ebayimg.com/images/g/PT4AAOSwYxti7cTF/s-l1200.jpg",
+      "https://i.ebayimg.com/images/g/3ogAAOSwZmBlWlTn/s-l400.jpg",
 
     desc:
-      "This superhero movie follows Peter Parker on a school trip to Europe. He wants a break from being Spider-Man. Instead, Nick Fury recruits him and Mysterio to fight destructive creatures called Elementals",
+      "Miles Morales is pulled across the multiverse and encounters the Spider Society.",
 
     cast:
-      "Tom Holland",
+      "Shameik Moore • Hailee Steinfeld • Brian Tyree Henry • Jake Johnson",
 
-    drive:"https://drive.google.com/file/d/1t131YY2YExvKcnwJwFx3XDDNe-XHvrJA/view?usp=sharing"
+    drive:"https://drive.google.com/file/d/1Sd1l_LhKRp_2OE5gRJJyPubnZjJccLgQ/view"
   },
 
 
@@ -1877,7 +2004,7 @@ const movies = [
     cast:
       "Chadwick Boseman • Michael B. Jordan • Lupita Nyong'o • Danai Gurira",
 
-    drive:"https://drive.google.com/file/d/1wdUOiz7tI3R5vTz779h7CesAW5h0kUh1/view?usp=sharing"
+    drive:"https://drive.google.com/file/d/1wdUOiz7tI3R5vTz779h7CesAW5h0kUh1/view"
   },
 
 
@@ -2099,6 +2226,7 @@ function render(id,list,portrait=false){
 ========================================================= */
 
 function moviesForRow(rowId){
+  if(rowId === "allTitles") return [...movies];
   const row = homeRows[rowId];
   if(!row) return [...movies];
   return row.movies.map(id => movies.find(m => m.id === id)).filter(Boolean);
@@ -2109,7 +2237,8 @@ function applyHomeRowSettings(){
     continue: ["continueTitle", "continueGrid"],
     popular: ["popularTitle", "popularGrid"],
     top: ["topTitle", "topGrid"],
-    new: ["newTitle", "moreGrid"]
+    new: ["newTitle", "moreGrid"],
+    allTitles: ["allTitlesTitle", "allTitlesGrid"]
   };
 
   Object.entries(rowMap).forEach(([rowId, [titleId, gridId]]) => {
@@ -2685,9 +2814,7 @@ function showLoadingScreen(){
     "loading your notflix",
     "i'm bored as hell so i'm writing these messages, so what",
     "at least this website dosen't spam ads every time you click something",
-    "123movies, spenflix and onionplay you can kiss my----",
-    "thanks dnv2 for the movies and media and stuff",
-    "the fact that this is ai generated is insane gng"
+    "123movies, spenflix and onionplay you can kiss my----"
   ];
   const randomLoadingText = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
 
