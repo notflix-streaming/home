@@ -10,6 +10,13 @@
 <title>Notflix | Free Streaming Proxy</title>
 
 <style>
+/* Netflix Sans webfont */
+@font-face{font-family:"Netflix Sans";font-weight:100;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Th.woff2") format("woff2");}
+@font-face{font-family:"Netflix Sans";font-weight:300;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Lt.woff2") format("woff2");}
+@font-face{font-family:"Netflix Sans";font-weight:400;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff2") format("woff2");}
+@font-face{font-family:"Netflix Sans";font-weight:700;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Md.woff2") format("woff2");}
+@font-face{font-family:"Netflix Sans";font-weight:800;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Bd.woff2") format("woff2");}
+@font-face{font-family:"Netflix Sans";font-weight:900;font-style:normal;font-display:swap;src:url("https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Blk.woff2") format("woff2");}
 :root{
   --bg:#000;
   --panel:#181818;
@@ -45,6 +52,83 @@ body{
   min-width:320px;
   min-height:100vh;
   padding:16px;
+}
+
+/* =========================
+   THEME
+========================= */
+
+body.light-theme{
+  --bg:#f4f4f4;
+  --panel:#fff;
+  --text:#111;
+  --muted:#666;
+}
+
+body.light-theme,
+body.light-theme .site-window{
+  background:var(--bg);
+  color:var(--text);
+}
+
+body.light-theme .site-window{
+  border-color:#d8d8d8;
+  box-shadow:0 18px 70px rgba(0,0,0,.12);
+}
+
+body.light-theme .nav.scrolled{
+  background:#fff;
+}
+
+body.light-theme .nav{
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.65),transparent);
+}
+
+body.light-theme .navlinks button,
+body.light-theme .search-btn,
+body.light-theme .back{
+  color:#222;
+}
+
+body.light-theme #searchBox{
+  background:#fff;
+  color:#111;
+  border-color:#aaa;
+}
+
+body.light-theme .search-results,
+body.light-theme .details,
+body.light-theme .player,
+body.light-theme .update-log,
+body.light-theme .request-page{
+  background:var(--bg);
+}
+
+body.light-theme .detail p,
+body.light-theme .player-tagline,
+body.light-theme .request-page-intro{
+  color:#555;
+}
+
+body.light-theme .empty{
+  color:#666;
+}
+
+.theme-btn{
+  border:1px solid #444;
+  background:rgba(30,30,30,.85);
+  color:#fff;
+  border-radius:999px;
+  padding:7px 11px;
+  cursor:pointer;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+body.light-theme .theme-btn{
+  background:#fff;
+  color:#111;
+  border-color:#bbb;
 }
 
 /* A contained app window keeps the entire interface in one stable shape. */
@@ -96,6 +180,29 @@ button{
   font-weight:600;
   letter-spacing:.3px;
   animation:loadingPulse 1.2s ease-in-out infinite;
+}
+.loading-counter{
+  color:#aaa;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.4px;
+}
+
+.loading-skip{
+  display:none;
+  border:1px solid #555;
+  background:#181818;
+  color:#fff;
+  border-radius:999px;
+  padding:7px 15px;
+  cursor:pointer;
+  font-size:12px;
+  transition:transform .2s ease, background .2s ease;
+}
+
+.loading-skip:hover{
+  transform:translateY(-1px);
+  background:#242424;
 }
 
 @keyframes loadingPulse{
@@ -380,6 +487,32 @@ button{
   margin:0 0 14px;
 }
 
+.collection-logo-title{
+  display:flex;
+  align-items:center;
+  min-height:52px;
+}
+
+.collection-logo{
+  display:block;
+  width:auto;
+  height:52px;
+  max-width:280px;
+  object-fit:contain;
+  object-position:left center;
+}
+
+.spiderman-collection-logo{
+  height:52px;
+  max-width:250px;
+}
+
+.sonic-collection-logo{
+  height:54px;
+  max-width:300px;
+}
+
+
 .row h2{
   margin:0;
   font-size:22px;
@@ -388,6 +521,45 @@ button{
 .row-link{
   color:#aaa;
   font-size:12px;
+}
+
+/* =========================
+   COMING SOON
+========================= */
+
+.coming-card{
+  flex:0 0 280px;
+  min-height:150px;
+  padding:22px;
+  border-radius:10px;
+  background:linear-gradient(145deg,#1b1b1b,#101010);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.coming-badge{
+  display:inline-block;
+  margin-bottom:14px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#e50914;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.coming-card h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+
+.coming-card p{
+  margin:0;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.5;
 }
 
 /* =========================
@@ -412,14 +584,40 @@ button{
   flex:0 0 calc((100% - 40px)/5);
   min-width:0;
   aspect-ratio:16/9;
-  border-radius:4px;
+  border-radius:6px;
   overflow:hidden;
   background:#222;
   cursor:pointer;
   transition:
-    transform .25s,
-    box-shadow .25s;
+    transform .42s cubic-bezier(.22,.61,.36,1),
+    box-shadow .42s cubic-bezier(.22,.61,.36,1),
+    filter .42s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+  transform:translateZ(0);
   outline:none;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.16) 50%,transparent 75%);
+  transform:translateX(-130%);
+  transition:opacity .2s ease;
+}
+
+.card:hover::before,
+.card:focus-visible::before{
+  opacity:1;
+  animation:cardSheen .7s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes cardSheen{
+  from{transform:translateX(-130%);}
+  to{transform:translateX(130%);}
 }
 
 .card.portrait{
@@ -428,9 +626,26 @@ button{
 
 .card:hover,
 .card:focus-visible{
-  transform:scale(1.08);
+  transform:translateY(-7px) scale(1.055);
   z-index:10;
-  box-shadow:0 8px 28px rgba(0,0,0,.65);
+  filter:brightness(1.04);
+  box-shadow:0 18px 38px rgba(0,0,0,.55);
+}
+
+.card:active{
+  transform:translateY(-2px) scale(1.015);
+  transition-duration:.12s;
+}
+
+.card img{
+  transition:transform .6s cubic-bezier(.22,.61,.36,1),filter .6s ease;
+  will-change:transform;
+}
+
+.card:hover img,
+.card:focus-visible img{
+  transform:scale(1.045);
+  filter:brightness(1.03);
 }
 
 .card img{
@@ -589,9 +804,131 @@ button{
   display:block !important;
 }
 
-'.search-results h2{
+.search-results h2{
   margin:0 0 18px;
 }
+
+.search-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:0 0 24px;
+}
+
+.search-tools select,
+.search-tools input{
+  border:1px solid #555;
+  background:#111;
+  color:#fff;
+  border-radius:4px;
+  padding:10px 12px;
+  outline:none;
+}
+
+body.light-theme .search-tools select,
+body.light-theme .search-tools input{
+  background:#fff;
+  color:#111;
+  border-color:#aaa;
+}
+
+.library-page{
+  display:none;
+  min-height:calc(100vh - var(--nav-height));
+  padding:45px var(--page-pad) 70px;
+}
+
+.library-page.show{
+  display:block;
+}
+
+.library-header{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+
+.library-header h1{
+  margin:0 0 6px;
+  font-size:36px;
+}
+
+.library-subtitle{
+  margin:0;
+  color:var(--muted);
+}
+
+.library-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.library-actions button{
+  border:1px solid #555;
+  background:#181818;
+  color:#fff;
+  border-radius:4px;
+  padding:9px 13px;
+  cursor:pointer;
+}
+
+body.light-theme .library-actions button{
+  background:#fff;
+  color:#111;
+  border-color:#aaa;
+}
+
+.az-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:25px;
+}
+
+.az-bar button{
+  min-width:34px;
+  height:34px;
+  border:1px solid #444;
+  background:#111;
+  color:#fff;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.az-bar button:hover,
+.az-bar button.active{
+  background:#e50914;
+  border-color:#e50914;
+}
+
+body.light-theme .az-bar button{
+  background:#fff;
+  color:#111;
+  border-color:#bbb;
+}
+
+.library-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:18px;
+}
+
+.library-grid .card{
+  min-width:0;
+}
+
+@media(max-width:1000px){
+  .library-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+
+@media(max-width:650px){
+  .library-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
 
 /* =========================
    UPDATE LOG
@@ -772,6 +1109,11 @@ body.updates-open .update-log{
 .detail-actions{
   margin-top:24px;
 }
+
+.detail-recommendations{margin-top:55px;}
+.detail-row{margin-top:40px;}
+.detail-row:first-child{margin-top:0;}
+.detail-row .row-title h2{font-size:25px;}
 
 /* =========================
    PLAYER
@@ -1175,6 +1517,8 @@ footer{
 <div class="loading-screen" id="loadingScreen" aria-label="Loading Notflix">
   <img src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyOG5tY3p6eGJ6bDVreDFyNTRueGV4ZzQ3bHNocTRkNnA2enFrc202NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/FgH5xSNjGHZsiYPWAX/200.gif" alt="Loading">
   <div class="loading-text"></div>
+  <div class="loading-counter" id="loadingCounter">(0/0)</div>
+  <button class="loading-skip" id="loadingSkip" type="button" onclick="skipLoadingScreen()">Skip</button>
 </div>
 
 <div class="site-window">
@@ -1220,6 +1564,12 @@ footer{
     </button>
 
     <button
+      onclick="showLibrary()"
+    >
+      Library
+    </button>
+
+    <button
       onclick="showUpdateLog()"
     >
       Updates
@@ -1253,6 +1603,15 @@ footer{
       >
 
     </div>
+
+    <button
+      class="theme-btn"
+      id="themeToggle"
+      onclick="toggleTheme()"
+      aria-label="Toggle light and dark theme"
+    >
+      ☀ Light
+    </button>
 
     <div class="profile">
       A
@@ -1408,6 +1767,10 @@ footer{
 
       <h2 id="allTitlesTitle">Every Movie & Show</h2>
 
+      <button class="row-link" onclick="showAllRow('allTitles')">
+        See all
+      </button>
+
     </div>
 
     <div
@@ -1424,8 +1787,13 @@ footer{
     id="spidermanCollection"
   >
 
-    <div class="row-title">
-      <h2 id="spidermanCollectionTitle">Spider-Man Collection</h2>
+    <div class="row-title collection-logo-title">
+      <img
+        id="spidermanCollectionTitle"
+        class="collection-logo spiderman-collection-logo"
+        src="https://1000logos.net/wp-content/uploads/2017/06/Spiderman-Logo.png"
+        alt="Spider-Man Collection"
+      >
     </div>
 
     <div
@@ -1442,8 +1810,13 @@ footer{
     id="sonicCollection"
   >
 
-    <div class="row-title">
-      <h2 id="sonicCollectionTitle">Sonic Collection</h2>
+    <div class="row-title collection-logo-title">
+      <img
+        id="sonicCollectionTitle"
+        class="collection-logo sonic-collection-logo"
+        src="https://upload.wikimedia.org/wikipedia/commons/6/66/Sonic_the_Hedgehog_2020.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+        alt="Sonic Collection"
+      >
     </div>
 
     <div
@@ -1482,6 +1855,33 @@ footer{
 
 
 <!-- =====================================================
+     A-Z LIBRARY
+===================================================== -->
+
+<section class="library-page" id="libraryPage">
+
+  <button class="back" onclick="goHome()">
+    ← Back to Home
+  </button>
+
+  <div class="library-header">
+    <div>
+      <h1>A–Z Library</h1>
+      <p class="library-subtitle" id="libraryCount">Browse every Notflix title alphabetically.</p>
+    </div>
+    <div class="library-actions">
+      <button onclick="randomMovie()">🎲 Random Movie</button>
+      <button onclick="showLibrary()">↻ Show All</button>
+    </div>
+  </div>
+
+  <div class="az-bar" id="azBar"></div>
+
+  <div class="library-grid" id="libraryGrid"></div>
+
+</section>
+
+<!-- =====================================================
      SEARCH RESULTS
 ===================================================== -->
 
@@ -1500,6 +1900,17 @@ footer{
   <h2 id="resultsTitle">
     Search Results
   </h2>
+
+  <div class="search-tools">
+    <select id="searchType" onchange="runAdvancedSearch()" aria-label="Search by">
+      <option value="all">Search everything</option>
+      <option value="title">Search by title</option>
+      <option value="actor">Search by actor</option>
+      <option value="genre">Search by genre</option>
+      <option value="year">Search by year</option>
+    </select>
+    <input id="advancedSearchBox" type="search" placeholder="Search Notflix..." oninput="runAdvancedSearch()">
+  </div>
 
   <div
     class="carousel poster"
@@ -1564,6 +1975,18 @@ footer{
 
     </div>
 
+  </div>
+
+  <div class="detail-recommendations">
+    <section class="row detail-row" id="detailCollectionSection" style="display:none;">
+      <div class="row-title"><h2 id="detailCollectionTitle"></h2></div>
+      <div class="carousel" id="detailCollectionGrid"></div>
+    </section>
+
+    <section class="row detail-row" id="moreLikeThisSection">
+      <div class="row-title"><h2>More Like This</h2></div>
+      <div class="carousel" id="moreLikeThisGrid"></div>
+    </section>
   </div>
 
 </section>
@@ -1732,13 +2155,14 @@ const homeRows = {
   },
   spidermanCollection: {
     title: "Spider-Man Collection",
-    movies: ["noWayHome", "sp3", "into", "across"]
+    movies: ["spiderman2002", "amazingSpiderman", "homecoming", "farFromHome", "noWayHome", "sp3", "into", "across"]
   },
   sonicCollection: {
     title: "Sonic Collection",
-    movies: ["sonicova", "sonic2"]
+    movies: ["sonic2020", "sonicova", "sonic2"]
   }
 };
+
 
 
 /* =========================================================
@@ -1749,7 +2173,67 @@ const updateLog = [
   {
     version:"Latest",
     date:"September 5, 2026",
-    text:"Added permanent Spider-Man and Sonic collections to the homepage, using the movies already in the Notflix database."
+    text:"Hid Project Aaron The Carter from the Notflix movie library and homepage listings."
+  },
+  {
+    version:"Latest",
+    date:"September 5, 2026",
+    text:"Added the Netflix Sans webfont to Notflix and connected the site-wide typography to the actual font files so the interface uses Netflix Sans instead of falling back to Arial when the font is available."
+  },
+  {
+    version:"Latest",
+    date:"September 5, 2026",
+    text:"Reverted the loading-message rotation change so the loading screen is back to randomly selecting a message instead of cycling through every message."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated the loading-message system so every message added to the loadingTexts array can actually appear. Loading messages now cycle through the full list instead of randomly choosing one, so adding a new message automatically includes it in the rotation."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated the Notflix loading screen counter to show the actual number of loaded assets versus the total assets needed, using values like (0/0), (3/8), and (8/8), and made the loading screen finish when those assets are ready while keeping the Skip button after 5 seconds. Also kept simple named tagline colors such as green, blue, and red."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added a See all button to the Every Movie & Show homepage row and removed the UI sound toggle button while keeping the UI sounds active."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added Notflix UI sounds with subtle generated click, hover, and page-opening effects, plus a persistent UI sound toggle so sounds can be turned on or off."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added smoother animated movie cards with a soft lift, scale, shadow, image zoom, subtle brightness change, and a glossy sheen sweep on hover/focus, plus a quick press animation when clicking a card."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added a More Like This section to movie details, automatically recommends similar titles using movie genres and year, and shows a movie's collection underneath the details when it belongs to a collection such as Spider-Man or Sonic."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated the loading screen so its (loaded/total) counter uses the actual unique media assets used across the Notflix website, preloads the site artwork, and finishes when those assets are loaded; also keeps the 5-second Skip button. The counter now disappears when loading is complete so (0/0) no longer remains visible after the loading screen finishes."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added the A–Z Library, persistent Dark/Light theme toggle, advanced search by title, actor, genre, and year, a Random Movie button, alphabet letter filtering, and a full-library browsing experience."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated the Sonic Collection logo to the requested Sonic the Hedgehog 2020 logo and added Spider-Man (2002), The Amazing Spider-Man (2012), and Sonic the Hedgehog (2020) to their respective collections."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Changed the Spider-Man and Sonic collection headings from plain text into image logos, using the requested Spider-Man and Sonic logo images."
   },
   {
     version:"Previous",
@@ -1794,13 +2278,158 @@ const updateLog = [
 ];
 
 
+/*
+  EASY TAGLINE COLOR SETTING:
+  Change taglineColor on any movie to a CSS color name, for example:
+  taglineColor:"green"
+  taglineColor:"blue"
+  taglineColor:"red"
+  You can also use hex colors such as taglineColor:"#00ff88".
+*/
+
 const movies = [
+
+  {
+    id:"spiderman2002",
+
+    title:"Spider-Man",
+    duration:"2h 1m",
+    taglineColor:"white",
+    tagline:"With great power comes great responsibility.",
+
+    year:"2002",
+
+    genre:"Action • Adventure • Superhero",
+
+    rating:"PG-13",
+
+    poster:
+      "https://image.tmdb.org/t/p/w500/gh4cZbhZxyTbgxQPxD0dOudYf9.jpg",
+
+    desc:
+      "Peter Parker gains extraordinary abilities and learns what it means to use them responsibly.",
+
+    cast:
+      "Tobey Maguire • Willem Dafoe • Kirsten Dunst • James Franco",
+
+    drive:""
+  },
+
+
+  {
+    id:"amazingSpiderman",
+
+    title:"The Amazing Spider-Man",
+    duration:"2h 16m",
+    taglineColor:"white",
+    tagline:"The untold story of Peter Parker.",
+
+    year:"2012",
+
+    genre:"Action • Adventure • Superhero",
+
+    rating:"PG-13",
+
+    poster:
+      "https://image.tmdb.org/t/p/w500/fSbqPbqXa7ePo8bcnZYN9Q0ZibQ.jpg",
+
+    desc:
+      "Peter Parker explores his powers while uncovering secrets about his past and his parents.",
+
+    cast:
+      "Andrew Garfield • Emma Stone • Rhys Ifans • Denis Leary",
+
+    drive:""
+  },
+
+
+  {
+    id:"sonic2020",
+
+    title:"Sonic the Hedgehog",
+    duration:"1h 39m",
+    taglineColor:"white",
+    tagline:"Gotta go fast!",
+
+    year:"2020",
+
+    genre:"Action • Adventure • Comedy",
+
+    rating:"PG",
+
+    poster:
+      "https://image.tmdb.org/t/p/w500/qi6qwClvTfZJiI5GhsKbtkqg28W.jpg",
+
+    desc:
+      "Sonic teams up with Tom to stop Dr. Robotnik and protect his new home on Earth.",
+
+    cast:
+      "Ben Schwartz • James Marsden • Jim Carrey • Tika Sumpter",
+
+    drive:""
+  },
+
+
+  {
+    id:"homecoming",
+
+    title:"Spider-Man: Homecoming",
+    duration:"2h 13m",
+    taglineColor:"white",
+    tagline:"Your friendly neighborhood Spider-Man is back!",
+
+    year:"2017",
+
+    genre:"Action • Adventure • Superhero",
+
+    rating:"PG-13",
+
+    poster:
+      "https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jKYaGHWe8YQ.jpg",
+
+    desc:
+      "Peter Parker tries to balance life as a high school student with his new role as Spider-Man.",
+
+    cast:
+      "Tom Holland • Michael Keaton • Robert Downey Jr. • Zendaya",
+
+    drive:""
+  },
+
+
+  {
+    id:"farFromHome",
+
+    title:"Spider-Man: Far From Home",
+    duration:"2h 9m",
+    taglineColor:"white",
+    tagline:"A new trip. A new threat.",
+
+    year:"2019",
+
+    genre:"Action • Adventure • Superhero",
+
+    rating:"PG-13",
+
+    poster:
+      "https://image.tmdb.org/t/p/w500/4YmcV6f7q9mKQmVY1cVqG7fR8nN.jpg",
+
+    desc:
+      "Peter Parker joins his friends on a European trip while a new threat forces him back into action.",
+
+    cast:
+      "Tom Holland • Samuel L. Jackson • Zendaya • Jake Gyllenhaal",
+
+    drive:""
+  },
+
 
   {
     id:"buddy",
 
     title:"Buddy",
     duration:"1h 35m",
+    taglineColor:"white",
     tagline:"The newest movie on Notflix!",
 
     year:"2026",
@@ -1827,6 +2456,7 @@ const movies = [
 
     title:"Spider-Man: No Way Home",
     duration:"2h 28m",
+    taglineColor:"white",
     tagline:"One of the biggest Spider-Man adventures!",
 
     year:"2021",
@@ -1853,6 +2483,7 @@ const movies = [
 
     title:"The Flash",
     duration:"2h 24m",
+    taglineColor:"white",
     tagline:"Worlds collide!",
 
     year:"2023",
@@ -1879,6 +2510,7 @@ const movies = [
 
     title:"Sonic the Hedgehog: The Movie",
     duration:"54m",
+    taglineColor:"white",
     tagline:"A classic Sonic adventure!",
 
     year:"1996",
@@ -1904,6 +2536,7 @@ const movies = [
 
     title:"The Bad Guys 2",
     duration:"1h 44m",
+    taglineColor:"white",
     tagline:"Great movie to watch when you want something fun!",
 
     year:"2025",
@@ -1930,6 +2563,7 @@ const movies = [
 
     title:"Spider-man 3",
     duration:"2h 19m",
+    taglineColor:"white",
     tagline:"A classic superhero adventure.",
 
     year:"2007",
@@ -1956,6 +2590,7 @@ const movies = [
 
     title:"Sonic the Hedgehog 2",
     duration:"2h 02m",
+    taglineColor:"white",
     tagline:"A great adventure with Sonic and friends!",
 
     year:"2022",
@@ -1982,6 +2617,7 @@ const movies = [
 
     title:"Five Nights at Freddy's 2",
     duration:"1h 44m",
+    taglineColor:"white",
     tagline:"One of the most exciting movies on here!",
 
     year:"2025",
@@ -2010,6 +2646,7 @@ const movies = [
 
     movieImage:"https://commons.wikimedia.org/wiki/Special:FilePath/Spider-Man%20ITSV.png",
     duration:"1h 57m",
+    taglineColor:"white",
     tagline:"One of the best animated superhero movies!",
 
     year:"2018",
@@ -2040,6 +2677,7 @@ const movies = [
 
     title:"Spider-Man: Across the Spider-Verse",
     duration:"2h 20m",
+    taglineColor:"white",
     tagline:"An awesome multiverse adventure!",
 
     year:"2023",
@@ -2066,6 +2704,7 @@ const movies = [
 
     title:"Black Panther",
     duration:"2h 14m",
+    taglineColor:"white",
     tagline:"A legendary superhero movie.",
 
     year:"2018",
@@ -2141,6 +2780,7 @@ function setHero(movie){
   title.style.display = movie.movieImage ? "none" : "block";
   meta.textContent = `${movie.year} • ${movie.rating} • ${movie.duration || ""}`;
   tagline.textContent = movie.tagline || "";
+  tagline.style.color = movie.taglineColor || "white";
   desc.textContent = movie.desc || "";
 
   if(movie.movieImage){
@@ -2216,7 +2856,7 @@ function makeCard(movie,portrait=false){
         ${movie.year} • ${movie.rating}
       </div>
 
-      <div class="card-tagline">
+      <div class="card-tagline" style="color:${movie.taglineColor || "white"};">
         ${movie.tagline || ""}
       </div>
 
@@ -2252,12 +2892,14 @@ function makeCard(movie,portrait=false){
 
         event.preventDefault();
 
+        playUISound("open");
         details(movie.id);
 
       }
 
     };
 
+  bindCardSound(card);
 
   return card;
 }
@@ -2349,6 +2991,7 @@ function hideAllViews(){
   const hero = document.getElementById("hero");
   const main = document.getElementById("mainContent");
   const results = document.getElementById("results");
+  const library = document.getElementById("libraryPage");
   const updates = document.getElementById("updateLog");
   const detailsPage = document.getElementById("details");
   const playerPage = document.getElementById("player");
@@ -2357,6 +3000,7 @@ function hideAllViews(){
   if(hero) hero.style.display = "none";
   if(main) main.style.display = "none";
   if(results) results.classList.remove("show");
+  if(library) library.classList.remove("show");
   if(updates){
     updates.classList.remove("show");
     updates.style.display = "none";
@@ -2368,6 +3012,63 @@ function hideAllViews(){
 /* =========================================================
    DETAILS
 ========================================================= */
+
+function getMovieCollection(movieId){
+  const collectionRows = [
+    {id:"spidermanCollection", title:"Spider-Man Collection"},
+    {id:"sonicCollection", title:"Sonic Collection"}
+  ];
+  return collectionRows.find(collection =>
+    (homeRows[collection.id]?.movies || []).includes(movieId)
+  ) || null;
+}
+
+function getMoreLikeThis(movie){
+  if(!movie) return [];
+  const collection = getMovieCollection(movie.id);
+  const collectionIds = new Set(collection ? (homeRows[collection.id]?.movies || []) : []);
+  const genres = (movie.genre || "").split("•").map(g=>g.trim().toLowerCase()).filter(Boolean);
+  return movies
+    .filter(other => other.id !== movie.id && !collectionIds.has(other.id))
+    .map(other => {
+      const otherGenres = (other.genre || "").split("•").map(g=>g.trim().toLowerCase()).filter(Boolean);
+      const shared = genres.filter(g=>otherGenres.includes(g)).length;
+      const sameYear = movie.year && other.year === movie.year ? 1 : 0;
+      return {movie:other, score:shared * 3 + sameYear};
+    })
+    .sort((a,b)=>b.score-a.score || a.movie.title.localeCompare(b.movie.title))
+    .slice(0,8)
+    .map(item=>item.movie);
+}
+
+function renderDetailRecommendations(movie){
+  const collectionSection=document.getElementById("detailCollectionSection");
+  const collectionTitle=document.getElementById("detailCollectionTitle");
+  const collectionGrid=document.getElementById("detailCollectionGrid");
+  const moreGrid=document.getElementById("moreLikeThisGrid");
+  const moreSection=document.getElementById("moreLikeThisSection");
+  if(!collectionSection || !collectionTitle || !collectionGrid || !moreGrid || !moreSection) return;
+
+  const collection=getMovieCollection(movie.id);
+  if(collection){
+    collectionSection.style.display="block";
+    collectionTitle.textContent=collection.title;
+    collectionGrid.innerHTML="";
+    (homeRows[collection.id]?.movies || [])
+      .filter(id=>id!==movie.id)
+      .map(id=>movies.find(item=>item.id===id))
+      .filter(Boolean)
+      .forEach(item=>collectionGrid.appendChild(makeCard(item,true)));
+  }else{
+    collectionSection.style.display="none";
+    collectionGrid.innerHTML="";
+  }
+
+  const similar=getMoreLikeThis(movie);
+  moreGrid.innerHTML="";
+  similar.forEach(item=>moreGrid.appendChild(makeCard(item,true)));
+  moreSection.style.display=similar.length ? "block" : "none";
+}
 
 function details(id){
 
@@ -2407,10 +3108,9 @@ function details(id){
     .textContent =
       current.title;
 
-  document
-    .getElementById("detailTagline")
-    .textContent =
-      current.tagline || "";
+  const detailTagline = document.getElementById("detailTagline");
+  detailTagline.textContent = current.tagline || "";
+  detailTagline.style.color = current.taglineColor || "white";
 
 
   document
@@ -2429,6 +3129,8 @@ function details(id){
     .getElementById("detailCast")
     .textContent =
       current.cast;
+
+  renderDetailRecommendations(current);
 
 
     scrollTo(0,0);
@@ -2540,10 +3242,9 @@ function playCurrent(){
     .textContent =
       current.title;
 
-  document
-    .getElementById("playerTagline")
-    .textContent =
-      current.tagline || "";
+  const playerTagline = document.getElementById("playerTagline");
+  playerTagline.textContent = current.tagline || "";
+  playerTagline.style.color = current.taglineColor || "white";
 
   const player =
     document.getElementById("drive");
@@ -2580,6 +3281,200 @@ function closePlayer(){
 
 }
 
+
+/* =========================================================
+   A-Z LIBRARY + DISCOVERY TOOLS
+========================================================= */
+
+function renderAzBar(){
+  const bar = document.getElementById("azBar");
+  if(!bar) return;
+
+  const letters = ["#", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+  bar.innerHTML = letters.map(letter => `
+    <button type="button" onclick="filterLibraryLetter('${letter}')">${letter}</button>
+  `).join("");
+}
+
+function renderLibrary(list = [...movies]){
+  const grid = document.getElementById("libraryGrid");
+  const count = document.getElementById("libraryCount");
+  if(!grid) return;
+
+  const sorted = [...list].sort((a,b) =>
+    a.title.localeCompare(b.title, undefined, {sensitivity:"base"})
+  );
+
+  grid.innerHTML = "";
+  sorted.forEach(movie => grid.appendChild(makeCard(movie,true)));
+
+  if(count){
+    count.textContent = `${sorted.length} title${sorted.length === 1 ? "" : "s"} in the Notflix library`;
+  }
+}
+
+function filterLibraryLetter(letter){
+  const filtered = movies.filter(movie => {
+    const first = movie.title.trim().charAt(0).toUpperCase();
+    return letter === "#" ? !/[A-Z]/.test(first) : first === letter;
+  });
+
+  renderLibrary(filtered);
+
+  document.querySelectorAll(".az-bar button").forEach(button => {
+    button.classList.toggle("active", button.textContent === letter);
+  });
+}
+
+function showLibrary(){
+  hideAllViews();
+  document.getElementById("libraryPage").classList.add("show");
+  document.querySelectorAll(".navlinks button").forEach(button => button.classList.remove("active"));
+  const libraryButton = document.querySelector('.navlinks button[onclick="showLibrary()"]');
+  if(libraryButton) libraryButton.classList.add("active");
+  renderLibrary();
+  document.querySelectorAll(".az-bar button").forEach(button => button.classList.remove("active"));
+  scrollTo(0,0);
+}
+
+function randomMovie(){
+  const movie = movies[Math.floor(Math.random() * movies.length)];
+  if(movie) details(movie.id);
+}
+
+function runAdvancedSearch(){
+  const query = (document.getElementById("advancedSearchBox")?.value || "").toLowerCase().trim();
+  const type = document.getElementById("searchType")?.value || "all";
+
+  if(!query){
+    render("resultsGrid", [], true);
+    document.getElementById("resultsTitle").textContent = "Search Results";
+    return;
+  }
+
+  const found = movies.filter(movie => {
+    const title = movie.title.toLowerCase();
+    const actor = (movie.cast || "").toLowerCase();
+    const genre = (movie.genre || "").toLowerCase();
+    const year = String(movie.year || "").toLowerCase();
+
+    if(type === "title") return title.includes(query);
+    if(type === "actor") return actor.includes(query);
+    if(type === "genre") return genre.includes(query);
+    if(type === "year") return year.includes(query);
+
+    return `${title} ${actor} ${genre} ${year}`.includes(query);
+  });
+
+  document.getElementById("resultsTitle").textContent =
+    `${found.length} result${found.length === 1 ? "" : "s"}`;
+  render("resultsGrid", found, true);
+}
+
+function toggleTheme(){
+  const light = document.body.classList.toggle("light-theme");
+  localStorage.setItem("notflixTheme", light ? "light" : "dark");
+  updateThemeButton();
+}
+
+function updateThemeButton(){
+  const button = document.getElementById("themeToggle");
+  if(!button) return;
+  const light = document.body.classList.contains("light-theme");
+  button.textContent = light ? "☾ Dark" : "☀ Light";
+}
+
+function loadSavedTheme(){
+  const saved = localStorage.getItem("notflixTheme");
+  if(saved === "light") document.body.classList.add("light-theme");
+  updateThemeButton();
+}
+
+renderAzBar();
+loadSavedTheme();
+
+/* =========================================================
+   UI SOUNDS
+========================================================= */
+
+let uiAudioContext = null;
+let uiSoundsEnabled = true;
+let lastCardHoverSound = 0;
+
+function getUIAudioContext(){
+  if(!uiSoundsEnabled) return null;
+  try{
+    if(!uiAudioContext){
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if(!AudioCtx) return null;
+      uiAudioContext = new AudioCtx();
+    }
+    if(uiAudioContext.state === "suspended") uiAudioContext.resume();
+    return uiAudioContext;
+  }catch(error){
+    return null;
+  }
+}
+
+function playUISound(type="click"){
+  const ctx = getUIAudioContext();
+  if(!ctx) return;
+
+  const now = ctx.currentTime;
+  const gain = ctx.createGain();
+  const osc = ctx.createOscillator();
+  const filter = ctx.createBiquadFilter();
+
+  const settings = {
+    hover: {start:520, end:700, duration:.055, volume:.025, wave:"sine"},
+    click: {start:180, end:120, duration:.075, volume:.055, wave:"sine"},
+    open: {start:240, end:520, duration:.16, volume:.045, wave:"sine"},
+    success: {start:420, end:720, duration:.14, volume:.04, wave:"triangle"}
+  }[type] || {start:180, end:120, duration:.075, volume:.055, wave:"sine"};
+
+  osc.type = settings.wave;
+  osc.frequency.setValueAtTime(settings.start, now);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(40, settings.end), now + settings.duration);
+
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(2600, now);
+  filter.Q.value = 0.5;
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(settings.volume, now + .008);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + settings.duration);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(now);
+  osc.stop(now + settings.duration + .02);
+}
+
+
+function bindCardSound(card){
+  if(!card || card.dataset.soundBound) return;
+  card.dataset.soundBound = "true";
+  card.addEventListener("pointerenter", () => {
+    const now = performance.now();
+    if(now - lastCardHoverSound > 90){
+      lastCardHoverSound = now;
+      playUISound("hover");
+    }
+  });
+}
+
+document.addEventListener("click", event => {
+  const target = event.target.closest("button, .card, .row-link");
+  if(!target) return;
+  playUISound(target.classList.contains("card") ? "open" : "click");
+});
+
+function initUISounds(){
+  document.querySelectorAll(".card").forEach(bindCardSound);
+}
+
+initUISounds();
 
 /* =========================================================
    UPDATE LOG
@@ -2660,6 +3555,8 @@ function showAllRow(rowId){
   hideAllViews();
   document.getElementById("results").classList.add("show");
   document.getElementById("resultsTitle").textContent = config?.title || "All Movies";
+  const advancedBox = document.getElementById("advancedSearchBox");
+  if(advancedBox) advancedBox.value = "";
   render("resultsGrid", list, true);
   scrollTo(0,0);
 }
@@ -2746,50 +3643,24 @@ function toggleSearch(){
 ========================================================= */
 
 function doSearch(){
-
-  const query =
-    document
-      .getElementById("searchBox")
-      .value
-      .toLowerCase()
-      .trim();
-
+  const search = document.getElementById("searchBox");
+  const query = (search?.value || "").toLowerCase().trim();
 
   if(!query){
-
     goHome();
-
     return;
-
   }
-
 
   hideAllViews();
   document.getElementById("results").classList.add("show");
 
+  const advancedBox = document.getElementById("advancedSearchBox");
+  if(advancedBox) advancedBox.value = query;
+  const type = document.getElementById("searchType");
+  if(type) type.value = "all";
 
-  const found =
-    movies.filter(movie => {
-
-      const searchable =
-        `${movie.title} ${movie.genre} ${movie.cast}`
-          .toLowerCase();
-
-
-      return searchable.includes(query);
-
-    });
-
-
-  render(
-    "resultsGrid",
-    found,
-    true
-  );
-
-
+  runAdvancedSearch();
   scrollTo(0,0);
-
 }
 
 
@@ -2856,6 +3727,12 @@ document.addEventListener(
       ||
 
       document
+        .getElementById("libraryPage")
+        .classList.contains("show")
+
+      ||
+
+      document
         .getElementById("player")
         .classList.contains("show")
 
@@ -2875,62 +3752,236 @@ document.addEventListener(
 );
 
 
+let loadingTimer = null;
+let loadingProgressTimer = null;
+let loadingMessageTimer = null;
+let loadingStartedAt = 0;
+let loadingMessageIndex = 0;
+let loadingAssetTotal = 0;
+let loadingAssetLoaded = 0;
+let loadingAssetPromises = [];
+
+const NOTFLIX_LOADING_GIF = "https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyOG5tY3p6eGJ6bDVreDFyNTRueGV4ZzQ3bHNocTRkNnA2enFrc202NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/FgH5xSNjGHZsiYPWAX/200.gif";
+const NOTFLIX_STATIC_ASSETS = [
+  NOTFLIX_LOADING_GIF,
+  "https://1000logos.net/wp-content/uploads/2017/06/Spiderman-Logo.png",
+  "https://upload.wikimedia.org/wikipedia/commons/6/66/Sonic_the_Hedgehog_2020.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+];
+
+function getAllWebsiteAssetUrls(){
+  const urls = new Set(NOTFLIX_STATIC_ASSETS);
+
+  // Count every movie poster/logo artwork that the site can use.
+  if(Array.isArray(movies)){
+    movies.forEach(movie => {
+      if(movie.poster) urls.add(movie.poster);
+      if(movie.movieImage) urls.add(movie.movieImage);
+    });
+  }
+
+  // Count any media assets currently present in the page too.
+  document.querySelectorAll("img[src], video[src], audio[src], source[src], iframe[src]").forEach(el => {
+    if(el.closest?.("#loadingScreen")) return;
+    const src = el.getAttribute("src");
+    if(src && !src.startsWith("data:")) urls.add(src);
+  });
+
+  // Count CSS background images declared in the document.
+  document.querySelectorAll("style").forEach(style => {
+    const matches = style.textContent.match(/url\(\s*[\"']?(https?:[^\"')]+)[\"']?\s*\)/g) || [];
+    matches.forEach(match => {
+      const found = match.match(/url\(\s*[\"']?(https?:[^\"')]+)[\"']?\s*\)/);
+      if(found) urls.add(found[1]);
+    });
+  });
+
+  return [...urls];
+}
+
+function setLoadingProgress(loaded, total){
+  const counter = document.getElementById("loadingCounter");
+  loadingAssetLoaded = Math.max(0, Math.min(loaded, total));
+  loadingAssetTotal = Math.max(0, total);
+  if(counter){
+    counter.textContent = `(${loadingAssetLoaded}/${loadingAssetTotal})`;
+    counter.style.display = loadingAssetTotal === 0 || loadingAssetLoaded >= loadingAssetTotal ? "none" : "block";
+  }
+}
+
 function hideLoadingScreen(){
   const loader = document.getElementById("loadingScreen");
   if(!loader) return;
+  clearTimeout(loadingTimer);
+  clearInterval(loadingProgressTimer);
+  clearInterval(loadingMessageTimer);
+  const counter = loader.querySelector("#loadingCounter");
+  if(counter) counter.style.display = "none";
   loader.classList.add("hide");
   setTimeout(() => {
     if(loader.parentNode) loader.remove();
   }, 450);
 }
 
+function skipLoadingScreen(){
+  hideLoadingScreen();
+}
+
+// Add loading messages to this array. The loader randomly selects one each time it appears.
+const loadingTexts = [
+  "this is so peak gng",
+  "best proxy?",
+  "spiderman 3 is gas",
+  "loading your education",
+  "loading your netflix",
+  "loading your notflix",
+  "i'm bored as hell so i'm writing these messages, so what",
+  "at least this website doesn't spam ads every time you click something"
+];
+
 function showLoadingScreen(){
   let loader = document.getElementById("loadingScreen");
-  const loadingTexts = [
-    "this is so peak gng",
-    "best proxy?",
-    "spiderman 3 is gas",
-    "loading your education",
-    "loading your netflix",
-    "loading your notflix",
-    "i'm bored as hell so i'm writing these messages, so what",
-    "at least this website dosen't spam ads every time you click something",
-    "123movies, spenflix and onionplay you can kiss my----"
-  ];
-  const randomLoadingText = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
 
   if(!loader){
     loader = document.createElement("div");
     loader.className = "loading-screen";
     loader.id = "loadingScreen";
     loader.setAttribute("aria-label", "Loading Notflix");
-    loader.innerHTML = `<img src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyOG5tY3p6eGJ6bDVreDFyNTRueGV4ZzQ3bHNocTRkNnA2enFrc202NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/FgH5xSNjGHZsiYPWAX/200.gif" alt="Loading"><div class="loading-text"></div>`;
+    loader.innerHTML = `<img src="${NOTFLIX_LOADING_GIF}" alt="Loading"><div class="loading-text"></div><div class="loading-counter" id="loadingCounter">(0/0)</div><button class="loading-skip" id="loadingSkip" type="button" onclick="skipLoadingScreen()">Skip</button>`;
     document.body.prepend(loader);
   }
 
-  loader.querySelector(".loading-text").textContent = randomLoadingText;
+  const text = loader.querySelector(".loading-text");
+  const skip = loader.querySelector(".loading-skip");
+  if(skip) skip.style.display = "none";
   loader.classList.remove("hide");
+  loadingStartedAt = Date.now();
+
+  clearTimeout(loadingTimer);
+  clearInterval(loadingProgressTimer);
+  clearInterval(loadingMessageTimer);
+
+  // Randomly choose a loading message each time the loader appears.
+  if(text && loadingTexts.length){
+    loadingMessageIndex = Math.floor(Math.random() * loadingTexts.length);
+    text.textContent = loadingTexts[loadingMessageIndex];
+  }
+
+  // The counter is the real number of unique media assets on the website.
+  // We preload every artwork asset so the denominator is the actual site asset count.
+  const urls = getAllWebsiteAssetUrls();
+  setLoadingProgress(0, urls.length);
+  loadingAssetPromises = urls.map(url => new Promise(resolve => {
+    if(url.startsWith("data:")) return resolve();
+    const img = new Image();
+    let done = false;
+    const finish = () => {
+      if(done) return;
+      done = true;
+      loadingAssetLoaded += 1;
+      setLoadingProgress(loadingAssetLoaded, urls.length);
+      resolve();
+    };
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = url;
+    if(img.complete) finish();
+  }));
+
+  // Skip becomes available after five seconds.
+  loadingProgressTimer = setInterval(() => {
+    if(Date.now() - loadingStartedAt >= 5000 && skip) skip.style.display = "inline-flex";
+  }, 100);
+
+  Promise.all(loadingAssetPromises).then(() => {
+    if(document.getElementById("loadingScreen")) hideLoadingScreen();
+  });
+
+  // Safety fallback for a permanently unreachable external asset.
+  loadingTimer = setTimeout(hideLoadingScreen, 15000);
   return loader;
 }
 
-// Initial page load: show the loader briefly, then reveal Notflix.
-document.addEventListener("DOMContentLoaded", () => {
-  showLoadingScreen();
-  setTimeout(hideLoadingScreen, 500);
-});
+function getLoadingAssets(root=document){
+  return root.querySelectorAll?.("img[src], iframe[src], video[src], audio[src], source[src]") || [];
+}
 
-// Movie navigation: show the loader every time a movie is opened, then remove it
-// after the new movie page has had a moment to render (with a safety timeout).
+function isAssetLoaded(asset){
+  if(asset.tagName === "IMG") return asset.complete;
+  if(asset.tagName === "IFRAME") return asset.dataset.loadingLoaded === "true";
+  if(asset.tagName === "VIDEO" || asset.tagName === "AUDIO") return asset.readyState >= 2;
+  if(asset.tagName === "SOURCE") return true;
+  return true;
+}
+
+function watchLoadingAssets(root=document){
+  const assets = getLoadingAssets(root);
+  assets.forEach(asset => {
+    if(asset.tagName === "IFRAME"){
+      asset.dataset.loadingLoaded = "false";
+      asset.addEventListener("load", () => updateLoadingAssetCounter(root), {once:true});
+    }else if(!isAssetLoaded(asset)){
+      asset.addEventListener("load", () => updateLoadingAssetCounter(root), {once:true});
+      asset.addEventListener("error", () => updateLoadingAssetCounter(root), {once:true});
+    }
+  });
+  return assets;
+}
+
+function updateLoadingAssetCounter(root=document){
+  const assets = getLoadingAssets(root);
+  const loaded = assets.filter(isAssetLoaded).length;
+  // Keep the global website-asset count as the denominator.
+  setLoadingProgress(Math.max(loadingAssetLoaded, loaded), loadingAssetTotal || assets.length);
+}
+
+function finishLoadingWhenReady(root=document){
+  watchLoadingAssets(root);
+  // The global preload controls the loading screen. If new page-specific assets
+  // appear, give them a chance to finish before hiding it.
+  const started = Date.now();
+  const wait = () => {
+    const assets = getLoadingAssets(root);
+    const localLoaded = assets.filter(isAssetLoaded).length;
+    const localTotal = assets.length;
+    const globalDone = loadingAssetTotal === 0 || loadingAssetLoaded >= loadingAssetTotal;
+    const localDone = localLoaded === localTotal;
+    if(globalDone && localDone && Date.now() - started >= 120){
+      requestAnimationFrame(() => requestAnimationFrame(hideLoadingScreen));
+      return;
+    }
+    if(Date.now() - started < 15000) requestAnimationFrame(wait);
+    else hideLoadingScreen();
+  };
+  requestAnimationFrame(wait);
+}
+
 function loadMovieView(callback){
   showLoadingScreen();
   requestAnimationFrame(() => {
     callback();
-    setTimeout(hideLoadingScreen, 650);
+    finishLoadingWhenReady(document.getElementById("player") || document);
   });
 }
 
-// Extra safety fallback for a slow first load.
-setTimeout(hideLoadingScreen, 2500);
+// Initial page load.
+document.addEventListener("DOMContentLoaded", () => {
+  showLoadingScreen();
+  finishLoadingWhenReady(document);
+});
+
+// Navigation/action loader: buttons and links trigger the loader before their
+// existing inline handlers run. The counter now reports actual loaded assets.
+document.addEventListener("click", event => {
+  const target = event.target.closest("button, a");
+  if(!target) return;
+  if(target.closest("#loadingScreen")) return;
+  if(target.classList.contains("loading-skip")) return;
+  if(target.closest(".card")) return;
+  if(target.id === "themeToggle" || target.matches(".navlinks button, .back, .search-btn, .row-title button, .library-actions button")){
+    showLoadingScreen();
+    setTimeout(() => finishLoadingWhenReady(document), 0);
+  }
+});
 
 </script>
 
