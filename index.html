@@ -1417,6 +1417,42 @@ footer{
 
   </section>
 
+  <!-- SPIDER-MAN COLLECTION -->
+
+  <section
+    class="row poster"
+    id="spidermanCollection"
+  >
+
+    <div class="row-title">
+      <h2 id="spidermanCollectionTitle">Spider-Man Collection</h2>
+    </div>
+
+    <div
+      class="carousel"
+      id="spidermanCollectionGrid"
+    ></div>
+
+  </section>
+
+  <!-- SONIC COLLECTION -->
+
+  <section
+    class="row poster"
+    id="sonicCollection"
+  >
+
+    <div class="row-title">
+      <h2 id="sonicCollectionTitle">Sonic Collection</h2>
+    </div>
+
+    <div
+      class="carousel"
+      id="sonicCollectionGrid"
+    ></div>
+
+  </section>
+
 
   <!-- FOOTER -->
 
@@ -1693,6 +1729,14 @@ const homeRows = {
   allTitles: {
     title: "Every Movie & Show",
     movies: []
+  },
+  spidermanCollection: {
+    title: "Spider-Man Collection",
+    movies: ["noWayHome", "sp3", "into", "across"]
+  },
+  sonicCollection: {
+    title: "Sonic Collection",
+    movies: ["sonicova", "sonic2"]
   }
 };
 
@@ -1704,13 +1748,48 @@ const homeRows = {
 const updateLog = [
   {
     version:"Latest",
+    date:"September 5, 2026",
+    text:"Added permanent Spider-Man and Sonic collections to the homepage, using the movies already in the Notflix database."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Added the Every Movie & Show row so the homepage can automatically display the full movie database without manually maintaining another movie list."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated the homepage movie rows and removed Justice League: The Flashpoint Paradox from the movie database and homepage rows."
+  },
+  {
+    version:"Previous",
+    date:"September 5, 2026",
+    text:"Updated movie posters and Google Drive player links for Buddy, Spider-Man: No Way Home, The Flash, Sonic the Hedgehog: The Movie, The Bad Guys 2, Spider-Man 3, Sonic the Hedgehog 2, Five Nights at Freddy's 2, Into the Spider-Verse, Across the Spider-Verse, Black Panther, and The LEGO Movie."
+  },
+  {
+    version:"Previous",
     date:"September 4, 2026",
-    text:"Added movie logo support with a placeholder when a logo has not been added yet, improved the featured movie controls, and added the Notflix Update Log page."
+    text:"Added the separate Request a Movie or TV Show page with a request-form button, and made the Update Log open as its own page instead of appearing inside the homepage."
+  },
+  {
+    version:"Previous",
+    date:"September 4, 2026",
+    text:"Added the Notflix loading screen with the custom GIF, red spinner, rotating loading messages, and loading behavior when opening movies."
   },
   {
     version:"Previous",
     date:"September 2026",
-    text:"Added the Notflix loading screen, larger Notflix branding, movie details, search, and the movie player interface."
+    text:"Added larger Notflix branding, movie details, search functionality, the movie player interface, and movie logo support with a placeholder when a logo has not been added."
+  },
+  {
+    version:"Previous",
+    date:"September 2026",
+    text:"Added featured-movie controls and easy-to-edit homepage settings for the featured movie, homepage rows, and movie taglines."
+  },
+  {
+    version:"Previous",
+    date:"September 2026",
+    text:"Added the initial Notflix movie database and Netflix-style homepage with movie rows, navigation, hero content, movie cards, and movie playback."
   }
 ];
 
@@ -2238,7 +2317,9 @@ function applyHomeRowSettings(){
     popular: ["popularTitle", "popularGrid"],
     top: ["topTitle", "topGrid"],
     new: ["newTitle", "moreGrid"],
-    allTitles: ["allTitlesTitle", "allTitlesGrid"]
+    allTitles: ["allTitlesTitle", "allTitlesGrid"],
+    spidermanCollection: ["spidermanCollectionTitle", "spidermanCollectionGrid"],
+    sonicCollection: ["sonicCollectionTitle", "sonicCollectionGrid"]
   };
 
   Object.entries(rowMap).forEach(([rowId, [titleId, gridId]]) => {
