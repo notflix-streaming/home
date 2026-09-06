@@ -23,6 +23,7 @@
   --text:#fff;
   --muted:#b3b3b3;
   --red:#e50914;
+  --profile-accent:#e50914;
 }
 
 *{
@@ -2471,6 +2472,21 @@ const updateLog = [
   {
     version:"Latest",
     date:"September 6, 2026",
+    text:"Fixed the Continue Watching row by restoring its missing LocalStorage key and making the row reliably use saved unfinished watch positions first, with the last started movie as a fallback."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Removed the accidentally added profile theme controls so the profile page is back to its requested name and picture settings."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Added locally saved profile themes with Red, Blue, Purple, Green, and Orange options, and fixed Continue Watching so it now uses saved watch progress or the most recently opened movie."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
     text:"Improved the movie timestamp controls so the Hide/Show Timestamp button, timestamp text, input, and helper text have stronger contrast and are easier to read."
   },
   {
@@ -3317,13 +3333,17 @@ function setLastWatched(movieId){
 }
 
 function getContinueMovies(){
-  const lastId = getLastWatchedId();
-  const lastMovie = movies.find(movie => movie.id === lastId);
+  const progress=getProgress();
+  const progressMovies=Object.keys(progress)
+    .map(id=>({movie:movies.find(m=>m.id===id),data:progress[id]}))
+    .filter(x=>x.movie&&x.data&&Number(x.data.seconds)>0&&Number(x.data.percent)<95)
+    .sort((a,b)=>(b.data.updatedAt||0)-(a.data.updatedAt||0))
+    .map(x=>x.movie);
+  if(progressMovies.length) return progressMovies.slice(0,10);
 
-  // Keep Where You Left Off empty until the user has actually started a movie.
-  if(!lastMovie) return [];
-
-  return [lastMovie];
+  const lastId=getLastWatchedId();
+  const lastMovie=movies.find(movie=>movie.id===lastId);
+  return lastMovie ? [lastMovie] : [];
 }
 
 /* =========================================================
@@ -3334,6 +3354,7 @@ const NOTFLIX_LIKES_KEY="notflix_likes";
 const NOTFLIX_DISLIKES_KEY="notflix_dislikes";
 const NOTFLIX_RATINGS_KEY="notflix_ratings";
 const NOTFLIX_HISTORY_KEY="notflix_watch_history";
+const NOTFLIX_LAST_WATCHED_KEY="notflix_last_watched";
 const NOTFLIX_PROGRESS_KEY="notflix_watch_progress";
 const NOTFLIX_PINNED_KEY="notflix_pinned";
 const NOTFLIX_PROFILE_KEY="notflix_profile";
@@ -3342,7 +3363,7 @@ const NOTFLIX_SEEN_KEY="notflix_seen_titles";
 const NOTFLIX_PREFS_KEY="notflix_player_preferences";
 function readJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));}catch(e){return fallback;}}
 function writeJSON(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}}
-function getList(){return readJSON(NOTFLIX_LIST_KEY,[]);} function getLikes(){return readJSON(NOTFLIX_LIKES_KEY,[]);} function getDislikes(){return readJSON(NOTFLIX_DISLIKES_KEY,[]);} function getRatings(){return readJSON(NOTFLIX_RATINGS_KEY,{});} function getHistory(){return readJSON(NOTFLIX_HISTORY_KEY,[]);} function getProgress(){return readJSON(NOTFLIX_PROGRESS_KEY,{});} function getPinned(){return readJSON(NOTFLIX_PINNED_KEY,[]);} function getProfile(){return readJSON(NOTFLIX_PROFILE_KEY,{name:"",image:""});} function getRecentSearches(){return readJSON(NOTFLIX_SEARCHES_KEY,[]);} function getSeenTitles(){return readJSON(NOTFLIX_SEEN_KEY,[]);} function getPlayerPreferences(){return readJSON(NOTFLIX_PREFS_KEY,{volume:100,speed:"1",captions:"off"});}
+function getList(){return readJSON(NOTFLIX_LIST_KEY,[]);} function getLikes(){return readJSON(NOTFLIX_LIKES_KEY,[]);} function getDislikes(){return readJSON(NOTFLIX_DISLIKES_KEY,[]);} function getRatings(){return readJSON(NOTFLIX_RATINGS_KEY,{});} function getHistory(){return readJSON(NOTFLIX_HISTORY_KEY,[]);} function getProgress(){return readJSON(NOTFLIX_PROGRESS_KEY,{});} function getPinned(){return readJSON(NOTFLIX_PINNED_KEY,[]);} function getProfile(){return readJSON(NOTFLIX_PROFILE_KEY,{name:"",image:"",theme:"red"});} function getRecentSearches(){return readJSON(NOTFLIX_SEARCHES_KEY,[]);} function getSeenTitles(){return readJSON(NOTFLIX_SEEN_KEY,[]);} function getPlayerPreferences(){return readJSON(NOTFLIX_PREFS_KEY,{volume:100,speed:"1",captions:"off"});}
 function movieById(id){return movies.find(m=>m.id===id);}
 function toggleStoredId(key,id){const list=readJSON(key,[]),i=list.indexOf(id);if(i>=0)list.splice(i,1);else list.push(id);writeJSON(key,list);return list.includes(id);}
 function markMovieSeen(id){const seen=getSeenTitles();if(!seen.includes(id)){seen.push(id);writeJSON(NOTFLIX_SEEN_KEY,seen);}}
