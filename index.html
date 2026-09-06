@@ -989,6 +989,88 @@ body.light-theme .recent-searches{background:#fff;border-color:#ccc;}
 body.light-theme .recent-searches button{color:#222;}
 
 /* =========================
+   HELP PAGE
+========================= */
+
+.help-open .site-window{
+  display:none !important;
+}
+
+.help-open .help-page{
+  display:block !important;
+}
+
+.help-page{
+  display:none;
+  min-height:calc(100vh - 78px);
+  width:100%;
+  padding:70px clamp(24px,5vw,70px);
+  background:#000;
+}
+
+.help-page h1{
+  margin:0 0 10px;
+  font-size:32px;
+}
+
+.help-page-intro{
+  color:#aaa;
+  margin:0 0 28px;
+  max-width:760px;
+  line-height:1.6;
+}
+
+.help-panel{
+  max-width:900px;
+  display:grid;
+  gap:12px;
+}
+
+.help-item{
+  background:#111;
+  border:1px solid #252525;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.help-question{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#fff;
+  padding:18px 20px;
+  text-align:left;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.help-question span:last-child{
+  color:#aaa;
+  font-size:20px;
+}
+
+.help-answer{
+  display:none;
+  padding:0 20px 18px;
+  color:#aaa;
+  line-height:1.65;
+}
+
+.help-answer.show{
+  display:block;
+}
+
+body.light-theme .help-page{background:#f5f5f5;color:#111;}
+body.light-theme .help-item{background:#fff;border-color:#ddd;}
+body.light-theme .help-question{color:#111;}
+body.light-theme .help-answer{color:#555;}
+
+/* =========================
    UPDATE LOG
 ========================= */
 
@@ -1571,6 +1653,14 @@ footer{
   .site-window{width:100%;min-height:calc(100vh - 16px);}
   .row{width:calc(100% - 32px);}
 }
+.player-timestamp-form{max-width:520px;margin:12px 0 18px;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.03);}
+.timestamp-toggle-row{max-width:520px;margin:8px 0 4px;display:flex;justify-content:flex-start;}
+.timestamp-toggle-row button{font-size:13px;padding:7px 12px;background:#222;color:#fff;border:1px solid #555;border-radius:6px;}
+.player-timestamp-form label{color:#fff;}
+.player-timestamp-form input{background:#111;color:#fff;border:1px solid #555;}
+.player-timestamp-form input::placeholder{color:#aaa;}
+#playerTimestamp{color:#fff;font-weight:600;}
+.player-timestamp-form .local-actions{margin-top:10px;}
 </style>
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#07080c">
@@ -1657,6 +1747,12 @@ footer{
       onclick="showRequestPage()"
     >
       Request
+    </button>
+
+    <button
+      onclick="showHelpPage()"
+    >
+      Help
     </button>
 
   </nav>
@@ -2100,7 +2196,15 @@ footer{
 
   <p id="playerTagline" class="player-tagline"></p>
   <p id="playerPreferencesStatus" style="color:#888;font-size:12px;margin:8px 0 8px;"></p>
-  <p id="playerTimestamp" class="player-timestamp" aria-live="polite">00:00 / 00:00</p>
+  <div class="timestamp-toggle-row"><button id="timestampToggleButton" type="button" onclick="toggleTimestampPanel()">Hide Timestamp</button></div>
+  <div id="timestampPanel">
+    <p id="playerTimestamp" class="player-timestamp" aria-live="polite">00:00 / 00:00</p>
+    <div class="local-form player-timestamp-form">
+      <label>Save your timestamp<input id="manualTimestampInput" type="text" inputmode="numeric" placeholder="00:00" aria-label="Movie timestamp, for example 01:23"></label>
+      <div class="local-actions"><button type="button" onclick="saveManualTimestamp()">Save Timestamp</button><button type="button" onclick="clearManualTimestamp()">Clear Timestamp</button></div>
+      <p style="color:#bbb;font-size:12px;margin:0;">Enter the time you are currently at, such as 01:23 or 00:42:15. It will be saved to your local Notflix account.</p>
+    </div>
+  </div>
 
   <iframe
     id="drive"
@@ -2125,6 +2229,7 @@ footer{
     <section class="local-section"><div class="row-title"><h2>My List</h2></div><div class="carousel poster" id="myListGrid"></div></section>
     <section class="local-section"><div class="row-title"><h2>Pinned Favorites</h2></div><div class="carousel poster" id="pinnedGrid"></div></section>
     <section class="local-section"><div class="row-title"><h2>Watch History</h2></div><div id="historyList"></div></section>
+    <section class="local-section"><div class="row-title"><h2>Saved Watch Positions</h2></div><div id="savedPositionsList"></div></section>
     <section class="local-section"><div class="row-title"><h2>Ratings</h2></div><div id="ratingsList"></div></section>
     <section class="local-section"><div class="row-title"><h2>Player Preferences</h2></div>
       <div class="local-form">
@@ -2144,7 +2249,7 @@ footer{
 <section class="local-page" id="profilePage">
   <button class="back" onclick="showMyList()">← Back to My List</button>
   <div class="local-panel"><h1>Your Notflix Account</h1><p style="color:#aaa;margin:8px 0 24px;">One local account. Choose your name and profile picture.</p>
-    <div class="local-form"><label>Name<input id="profileNameInput" type="text" maxlength="30" placeholder="Your name"></label><label>Profile picture<input id="profileImageInput" type="file" accept="image/*"></label>
+    <div class="local-form"><button type="button" onclick="loadProfileFromLastSession()">Load Profile from Last Session</button><label>Name<input id="profileNameInput" type="text" maxlength="30" placeholder="Your name"></label><label>Profile picture<input id="profileImageInput" type="file" accept="image/*"></label>
       <div class="local-actions"><button type="button" onclick="saveProfile()">Save Profile</button><button type="button" onclick="removeProfilePicture()">Remove Picture</button></div>
     </div>
   </div>
@@ -2206,6 +2311,67 @@ footer{
   >
     Request a Movie or TV Show
   </a>
+
+</section>
+
+<!-- =====================================================
+     HELP PAGE
+===================================================== -->
+
+<section
+  class="help-page"
+  id="helpPage"
+>
+
+  <button
+    class="back"
+    onclick="goHome()"
+  >
+    ← Back to Home
+  </button>
+
+  <h1>Notflix Help</h1>
+
+  <p class="help-page-intro">
+    Need help using Notflix? Open a question below to see a quick explanation of the site's main features.
+  </p>
+
+  <div class="help-panel">
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>How do I watch a movie?</span><span>+</span></button>
+      <div class="help-answer">Open a movie from the homepage, search results, or Library, then choose the watch option on its details page.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>How does My List work?</span><span>+</span></button>
+      <div class="help-answer">Use the My List option on a movie to save it to your personal list. Your saved list is stored locally in your browser.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>How do I save my watch timestamp?</span><span>+</span></button>
+      <div class="help-answer">While viewing a movie, open the timestamp controls, enter the time you are currently at, and press Save Timestamp. You can view saved watch positions from your profile.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>Where are my profile settings saved?</span><span>+</span></button>
+      <div class="help-answer">Your Notflix profile, preferences, lists, ratings, searches, history, and saved timestamps are stored locally in your browser on this device.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>How do I search for something?</span><span>+</span></button>
+      <div class="help-answer">Use the search button in the navigation bar and enter a title, genre, actor, or other supported search information. You can also use the Library for A–Z browsing.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>How do I request a movie or TV show?</span><span>+</span></button>
+      <div class="help-answer">Open Request from the navigation bar and use the request form to send a title suggestion.</div>
+    </div>
+
+    <div class="help-item">
+      <button class="help-question" type="button" onclick="toggleHelpItem(this)"><span>What if something is not working?</span><span>+</span></button>
+      <div class="help-answer">Try refreshing the page first. If the problem continues, check the Updates page for recent fixes or use the Request page to report the issue.</div>
+    </div>
+  </div>
 
 </section>
 
@@ -2302,6 +2468,31 @@ const homeRows = {
 ========================================================= */
 
 const updateLog = [
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Improved the movie timestamp controls so the Hide/Show Timestamp button, timestamp text, input, and helper text have stronger contrast and are easier to read."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Added a dedicated Notflix Help page with expandable answers for watching movies, My List, saved timestamps, profile settings, search, requests, and basic troubleshooting."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Added a Hide Timestamp / Show Timestamp toggle to the movie player so the timestamp controls can be collapsed and restored whenever you want."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Fixed movie watch timestamps so the timer no longer starts automatically when a movie page opens. Replaced automatic elapsed-time tracking with a manual timestamp system: you can enter your current time, save it to your local Notflix account, and view saved watch positions from your profile."
+  },
+  {
+    version:"Latest",
+    date:"September 6, 2026",
+    text:"Added a Load Profile from Last Session button to the profile page so the saved local profile name can be restored into the profile form."
+  },
   {
     version:"Latest",
     date:"September 6, 2026",
@@ -3166,6 +3357,7 @@ function useRecentSearch(q){const i=document.getElementById("searchBox");if(i){i
 function clearRecentSearches(){localStorage.removeItem(NOTFLIX_SEARCHES_KEY);renderRecentSearches();}
 function updateProfileUI(){const p=getProfile(),b=document.getElementById("profileButton"),a=document.getElementById("myListAvatar");if(b)b.innerHTML=p.image?`<img src="${p.image}" alt="">`:escapeHtml((p.name||"A").charAt(0).toUpperCase());if(a)a.innerHTML=p.image?`<img src="${p.image}" alt="" style="width:100%;height:100%;border-radius:10px;object-fit:cover;display:block;">`:escapeHtml((p.name||"A").charAt(0).toUpperCase());}
 function showProfilePage(){hideAllViews();document.body.classList.add("local-page-open");document.getElementById("profilePage")?.classList.add("show");const p=getProfile();document.getElementById("profileNameInput").value=p.name||"";scrollTo(0,0);}
+function loadProfileFromLastSession(){const p=getProfile(),input=document.getElementById("profileNameInput");if(input)input.value=p.name||"";updateProfileUI();playUISound("success");}
 function saveProfile(){const input=document.getElementById("profileNameInput"),file=document.getElementById("profileImageInput")?.files?.[0],p=getProfile();p.name=(input?.value||"").trim();const finish=()=>{writeJSON(NOTFLIX_PROFILE_KEY,p);updateProfileUI();renderMyListPage();playUISound("success");showMyList();};if(file){if(!file.type.startsWith("image/"))return alert("Please choose an image file.");const r=new FileReader();r.onload=()=>{p.image=r.result;finish();};r.readAsDataURL(file);}else finish();}
 function removeProfilePicture(){const p=getProfile();p.image="";writeJSON(NOTFLIX_PROFILE_KEY,p);updateProfileUI();const i=document.getElementById("profileImageInput");if(i)i.value="";}
 function isInList(id){return getList().includes(id);} function isLiked(id){return getLikes().includes(id);} function isDisliked(id){return getDislikes().includes(id);} function isPinned(id){return getPinned().includes(id);} function getRating(id){return Number(getRatings()[id]||0);}
@@ -3176,7 +3368,8 @@ function setMovieRating(id,r){const a=getRatings();if(r===0)delete a[id];else a[
 function togglePinned(id){toggleStoredId(NOTFLIX_PINNED_KEY,id);refreshPersonalUI(id);renderMyListPage();}
 function refreshPersonalUI(id){document.querySelectorAll(`[data-personal-id="${id}"]`).forEach(el=>{const a=el.dataset.personalAction;const active=a==="list"?isInList(id):a==="like"?isLiked(id):a==="dislike"?isDisliked(id):a==="pin"?isPinned(id):false;el.classList.toggle("active",active);if(a==="list")el.textContent=active?"✓ In My List":"+ My List";if(a==="pin")el.textContent=active?"✓ Pinned":"Pin";});document.querySelectorAll(`[data-rating-for="${id}"]`).forEach(el=>el.value=String(getRating(id)));}
 function renderPersonalActions(id){return `<div class="detail-personal-actions"><button type="button" data-personal-id="${id}" data-personal-action="list" class="${isInList(id)?"active":""}" onclick="toggleMyList('${id}')">${isInList(id)?"✓ In My List":"+ My List"}</button><button type="button" data-personal-id="${id}" data-personal-action="like" class="${isLiked(id)?"active":""}" onclick="toggleLike('${id}')">Like</button><button type="button" data-personal-id="${id}" data-personal-action="dislike" class="${isDisliked(id)?"active":""}" onclick="toggleDislike('${id}')">Dislike</button><button type="button" data-personal-id="${id}" data-personal-action="pin" class="${isPinned(id)?"active":""}" onclick="togglePinned('${id}')">${isPinned(id)?"✓ Pinned":"Pin"}</button><select data-rating-for="${id}" aria-label="Rate movie" onchange="setMovieRating('${id}',Number(this.value))"><option value="0">Rate</option><option value="1">★ 1</option><option value="2">★ 2</option><option value="3">★ 3</option><option value="4">★ 4</option><option value="5">★ 5</option></select></div>`;}
-function renderMyListPage(){const lm=getList().map(movieById).filter(Boolean),pm=getPinned().map(movieById).filter(Boolean);render("myListGrid",lm,true);render("pinnedGrid",pm,true);const hb=document.getElementById("historyList"),h=getHistory();hb.innerHTML=h.length?h.map(x=>{const m=movieById(x.id);if(!m)return"";const p=getProgressPercent(m.id);return `<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(m.title)}</div><div class="personal-card-meta">${new Date(x.at).toLocaleString()} • ${getProgressText(m.id)||"Started"}</div><div class="progress-wrap"><div class="progress-bar" style="width:${p}%"></div></div></div><button type="button" onclick="details('${m.id}')">Open</button></div>`;}).join(""):"<div class='personal-empty'>Nothing watched yet.</div>";const rb=document.getElementById("ratingsList"),r=getRatings(),rated=Object.keys(r).map(id=>({m:movieById(id),r:r[id]})).filter(x=>x.m);rb.innerHTML=rated.length?rated.map(x=>`<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(x.m.title)}</div><div class="personal-card-meta">${"★".repeat(Number(x.r))}${"☆".repeat(5-Number(x.r))}</div></div><button type="button" onclick="details('${x.m.id}')">Open</button></div>`).join(""):"<div class='personal-empty'>You have not rated any titles yet.</div>";const p=getProfile();document.getElementById("myListHeading").textContent=p.name?`${p.name}'s Notflix`:"My List";document.getElementById("myListWelcome").textContent=p.name?`Welcome back, ${p.name}.`:"Your saved Notflix titles.";document.getElementById("accountSummary").innerHTML=`<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(p.name||"No name set")}</div><div class="personal-card-meta">${p.image?"Profile picture set":"No profile picture"}</div></div></div>`;const prefs=getPlayerPreferences();document.getElementById("prefVolume").value=prefs.volume;document.getElementById("prefSpeed").value=prefs.speed;document.getElementById("prefCaptions").value=prefs.captions;updateProfileUI();}
+function renderSavedWatchPositions(){const box=document.getElementById("savedPositionsList");if(!box)return;const progress=getProgress();const items=Object.keys(progress).map(id=>({m:movieById(id),p:progress[id]})).filter(x=>x.m&&x.p).sort((a,b)=>(b.p.updatedAt||0)-(a.p.updatedAt||0));box.innerHTML=items.length?items.map(x=>`<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(x.m.title)}</div><div class="personal-card-meta">Saved at ${formatPlayerTime(x.p.seconds||0)} / ${formatPlayerTime(x.p.total||getMovieDurationSeconds(x.m))}</div><div class="progress-wrap"><div class="progress-bar" style="width:${getProgressPercent(x.m.id)}%"></div></div></div><button type="button" onclick="details('${x.m.id}')">Open</button></div>`).join(""):"<div class='personal-empty'>No saved timestamps yet.</div>";}
+function renderMyListPage(){const lm=getList().map(movieById).filter(Boolean),pm=getPinned().map(movieById).filter(Boolean);render("myListGrid",lm,true);render("pinnedGrid",pm,true);renderSavedWatchPositions();const hb=document.getElementById("historyList"),h=getHistory();hb.innerHTML=h.length?h.map(x=>{const m=movieById(x.id);if(!m)return"";const p=getProgressPercent(m.id);return `<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(m.title)}</div><div class="personal-card-meta">${new Date(x.at).toLocaleString()} • ${getProgressText(m.id)||"Started"}</div><div class="progress-wrap"><div class="progress-bar" style="width:${p}%"></div></div></div><button type="button" onclick="details('${m.id}')">Open</button></div>`;}).join(""):"<div class='personal-empty'>Nothing watched yet.</div>";const rb=document.getElementById("ratingsList"),r=getRatings(),rated=Object.keys(r).map(id=>({m:movieById(id),r:r[id]})).filter(x=>x.m);rb.innerHTML=rated.length?rated.map(x=>`<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(x.m.title)}</div><div class="personal-card-meta">${"★".repeat(Number(x.r))}${"☆".repeat(5-Number(x.r))}</div></div><button type="button" onclick="details('${x.m.id}')">Open</button></div>`).join(""):"<div class='personal-empty'>You have not rated any titles yet.</div>";const p=getProfile();document.getElementById("myListHeading").textContent=p.name?`${p.name}'s Notflix`:"My List";document.getElementById("myListWelcome").textContent=p.name?`Welcome back, ${p.name}.`:"Your saved Notflix titles.";document.getElementById("accountSummary").innerHTML=`<div class="personal-card"><div class="personal-card-info"><div class="personal-card-title">${escapeHtml(p.name||"No name set")}</div><div class="personal-card-meta">${p.image?"Profile picture set":"No profile picture"}</div></div></div>`;const prefs=getPlayerPreferences();document.getElementById("prefVolume").value=prefs.volume;document.getElementById("prefSpeed").value=prefs.speed;document.getElementById("prefCaptions").value=prefs.captions;updateProfileUI();}
 function showMyList(){const p=getProfile();if(!p.name){showProfilePage();return;}hideAllViews();document.body.classList.add("local-page-open");document.getElementById("myListPage")?.classList.add("show");renderMyListPage();scrollTo(0,0);}
 function clearWatchHistory(){localStorage.removeItem(NOTFLIX_HISTORY_KEY);localStorage.removeItem(NOTFLIX_PROGRESS_KEY);localStorage.removeItem(NOTFLIX_LAST_WATCHED_KEY);renderMyListPage();goHome();}
 function savePlayerPreferences(){writeJSON(NOTFLIX_PREFS_KEY,{volume:Number(document.getElementById("prefVolume").value),speed:document.getElementById("prefSpeed").value,captions:document.getElementById("prefCaptions").value});playUISound("success");}
@@ -3192,12 +3385,16 @@ function getRecommendedMovies(){
   }).sort((a,b)=>b.score-a.score||a.m.title.localeCompare(b.m.title)).slice(0,10).map(x=>x.m);
 }
 function getNewToYouMovies(){const seen=new Set(getSeenTitles());return movies.filter(m=>!seen.has(m.id)).slice(0,10);}
-let progressTimer=null,progressMovieId="";
 function formatPlayerTime(seconds){const total=Math.max(0,Math.floor(Number(seconds)||0));const h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;}
 function getMovieDurationSeconds(movie){const match=String(movie?.duration||"").match(/(?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:(\d+)s)?/i);return Math.max(1,Number(match?.[1]||0)*3600+Number(match?.[2]||0)*60+Number(match?.[3]||0));}
+function parsePlayerTime(value){const raw=String(value||"").trim();if(!raw)return null;if(/^\d+$/.test(raw))return Number(raw);const parts=raw.split(":").map(Number);if(parts.some(n=>!Number.isFinite(n)||n<0)||parts.length>3)return null;if(parts.length===2)return parts[0]*60+parts[1];if(parts.length===3)return parts[0]*3600+parts[1]*60+parts[2];return null;}
+function toggleTimestampPanel(){const panel=document.getElementById("timestampPanel"),btn=document.getElementById("timestampToggleButton");if(!panel||!btn)return;const hidden=panel.hidden=!panel.hidden;btn.textContent=hidden?"Show Timestamp":"Hide Timestamp";try{localStorage.setItem("notflix_timestamp_panel_hidden",hidden?"1":"0");}catch(e){}}
+function restoreTimestampPanel(){const panel=document.getElementById("timestampPanel"),btn=document.getElementById("timestampToggleButton");if(!panel||!btn)return;let hidden=false;try{hidden=localStorage.getItem("notflix_timestamp_panel_hidden")==="1";}catch(e){}panel.hidden=hidden;btn.textContent=hidden?"Show Timestamp":"Hide Timestamp";}
 function updatePlayerTimestamp(elapsed,total){const el=document.getElementById("playerTimestamp");if(el)el.textContent=`${formatPlayerTime(elapsed)} / ${formatPlayerTime(total)}`;}
-function startLocalProgressTracker(movie){clearInterval(progressTimer);progressMovieId=movie?.id||"";if(!movie||!movie.duration)return;const total=getMovieDurationSeconds(movie);let elapsed=Math.min(total,Number(getProgress()[movie.id]?.seconds||0));updatePlayerTimestamp(elapsed,total);progressTimer=setInterval(()=>{if(!progressMovieId)return;elapsed=Math.min(total,elapsed+1);const data=getProgress();data[movie.id]={seconds:elapsed,total,percent:elapsed/total*100,updatedAt:Date.now()};writeJSON(NOTFLIX_PROGRESS_KEY,data);updatePlayerTimestamp(elapsed,total);if(elapsed>=total)stopLocalProgressTracker();},1000);}
-function stopLocalProgressTracker(){clearInterval(progressTimer);progressTimer=null;progressMovieId="";}
+function updateManualTimestampUI(movie){const total=getMovieDurationSeconds(movie);const saved=getProgress()[movie?.id];const elapsed=Math.min(total,Number(saved?.seconds||0));updatePlayerTimestamp(elapsed,total);const input=document.getElementById("manualTimestampInput");if(input)input.value=saved?formatPlayerTime(elapsed):"";}
+function saveManualTimestamp(){if(!current)return;const input=document.getElementById("manualTimestampInput");const parsed=parsePlayerTime(input?.value);const total=getMovieDurationSeconds(current);if(parsed===null||parsed<0||parsed>total){alert(`Enter a timestamp between 00:00 and ${formatPlayerTime(total)}.`);return;}const data=getProgress();data[current.id]={seconds:parsed,total,percent:parsed/total*100,updatedAt:Date.now(),manual:true};writeJSON(NOTFLIX_PROGRESS_KEY,data);updateManualTimestampUI(current);renderMyListPage();playUISound("success");}
+function clearManualTimestamp(){if(!current)return;const data=getProgress();delete data[current.id];writeJSON(NOTFLIX_PROGRESS_KEY,data);updateManualTimestampUI(current);renderMyListPage();playUISound("success");}
+function stopLocalProgressTracker(){}
 
 /* =========================================================
    RENDER
@@ -3284,13 +3481,14 @@ renderUpdateLog();
 ========================================================= */
 
 function hideAllViews(){
-  document.body.classList.remove("updates-open", "request-open", "local-page-open");
+  document.body.classList.remove("updates-open", "request-open", "help-open", "local-page-open");
   const windowEl = document.querySelector(".site-window");
   const hero = document.getElementById("hero");
   const main = document.getElementById("mainContent");
   const results = document.getElementById("results");
   const library = document.getElementById("libraryPage");
   const updates = document.getElementById("updateLog");
+  const helpPage = document.getElementById("helpPage");
   const detailsPage = document.getElementById("details");
   const playerPage = document.getElementById("player");
   const myListPage = document.getElementById("myListPage");
@@ -3305,6 +3503,7 @@ function hideAllViews(){
     updates.classList.remove("show");
     updates.style.display = "none";
   }
+  if(helpPage) helpPage.style.display = "none";
   if(detailsPage) detailsPage.classList.remove("show");
   if(playerPage) playerPage.classList.remove("show");
   if(myListPage) myListPage.classList.remove("show");
@@ -3565,7 +3764,8 @@ function playCurrent(){
   player.src =
     `https://drive.google.com/file/d/${driveId}/preview`;
 
-  startLocalProgressTracker(current);
+  restoreTimestampPanel();
+  updateManualTimestampUI(current);
 
     scrollTo(0,0);
   });
@@ -3832,6 +4032,25 @@ function showUpdateLog(){
   scrollTo(0,0);
 }
 
+
+function toggleHelpItem(button){
+  const answer=button?.nextElementSibling;
+  if(!answer)return;
+  const open=answer.classList.toggle("show");
+  const icon=button.querySelector("span:last-child");
+  if(icon)icon.textContent=open?"−":"+";
+}
+
+function showHelpPage(){
+  const helpPage=document.getElementById("helpPage");
+  hideAllViews();
+  document.body.classList.add("help-open");
+  if(helpPage)helpPage.style.display="block";
+  document.querySelectorAll(".navlinks button").forEach(button=>button.classList.remove("active"));
+  const helpButton=document.querySelector('.navlinks button[onclick="showHelpPage()"]');
+  if(helpButton)helpButton.classList.add("active");
+  scrollTo(0,0);
+}
 
 /* =========================================================
    REQUEST PAGE
